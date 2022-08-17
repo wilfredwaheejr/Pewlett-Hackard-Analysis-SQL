@@ -37,7 +37,7 @@ SELECT DISTINCT ON(e.emp_no) e.emp_no,
 de.from_date,
 de.to_date,
 ti.title
-INTO mentorship_eligibilty
+INTO mentorship_eligibility
 FROM employees AS e
 INNER JOIN dept_emp AS de
 ON (e.emp_no = de.emp_no)
@@ -46,3 +46,16 @@ ON (e.emp_no = ti.emp_no)
 WHERE (de.to_date = '9999-01-01')
 AND (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
 ORDER BY e.emp_no;
+
+-- Summary Queries
+
+-- Titles of Mentorship Eligible Employees
+SELECT COUNT(me.title), me.title
+INTO mentor_titles
+FROM mentorship_eligibility AS me
+GROUP BY me.title
+ORDER BY COUNT DESC;
+
+-- How many roles will need to be filled as the "silver tsunami" begins to make an impact?
+SELECT COUNT(ut.emp_no)
+FROM unique_titles as ut;
